@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f05226" />
+    <meta
+      name="description"
+      content="Elige tu antojo, arma tu pedido y disfruta. Prototipo de Fast Food Online."
+    />
+    <title>Fast Food Online · A un clic de tu antojo</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script defer src="js/catalog.js"></script>
+    <script defer src="js/cart.js"></script>
+    <script defer src="js/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#menu">Saltar al menú</a>
+    <div class="announcement">
+      Tu próximo antojo está aquí.
+      <span>Hecho al momento, disfrutado a tu manera.</span>
+    </div>
+    <header class="site-header">
+      <a href="#inicio" class="brand" aria-label="Fast Food Online, inicio"
+        ><img src="assets/favicon.svg" width="44" height="44" alt="" /><span
+          >fast food<span class="brand-sub">O N L I N E</span></span
+        ></a
+      >
+      <nav aria-label="Navegación principal">
+        <a href="#menu">Nuestro menú</a><a href="#promociones">Promociones</a
+        ><a href="#como-pedir">Cómo pedir</a>
+      </nav>
+      <button class="cart-trigger" data-open-cart>
+        <span aria-hidden="true">↗</span> Mi pedido
+        <span id="header-count" class="count">0</span>
+      </button>
+    </header>
+    <main id="inicio" class="page-shell">
+      <section id="promociones" class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="tiny-star">✳</span> BUENA COMIDA. CERO COMPLICACIONES.
+          </p>
+          <h1 id="hero-title">Hoy se vale<br />pedir <em>rico.</em></h1>
+          <p>
+            Tu hamburguesa favorita, una pizza para compartir<br
+              class="desktop-break"
+            />
+            o ese postre que no necesita excusas.
+          </p>
+          <a href="#menu" class="button button-light"
+            >Encuentra tu antojo <span aria-hidden="true">↗</span></a
+          >
+          <div class="hero-note">
+            <span aria-hidden="true">✦</span> Tú eliges. Nosotros ponemos el
+            sabor.
+          </div>
+        </div>
+        <div class="hero-photo">
+          <img
+            src="assets/images/burger-classic.jpg"
+            alt="Hamburguesa de res con queso, lechuga y tomate"
+            width="1000"
+            height="750"
+            fetchpriority="high"
+          />
+          <div class="hero-sticker">
+            <span>EL ANTOJO</span><strong>no espera.</strong
+            ><span>Y TÚ TAMPOCO.</span>
+          </div>
+        </div>
+        <span class="hero-edition">01 / EL SABOR EMPIEZA AQUÍ</span>
+      </section>
+      <div class="promo-strip">
+        <div>
+          <span class="promo-symbol" aria-hidden="true">✳</span>
+          <p>
+            <strong>Más sabor, mejor juntos.</strong
+            ><span>Combo clásico: hamburguesa + papas + bebida.</span>
+          </p>
+        </div>
+        <button class="text-button" id="show-combos">
+          Ver combos desde $149 <span aria-hidden="true">→</span>
+        </button>
+      </div>
+      <div class="order-layout">
+        <section id="menu" class="menu-section" aria-labelledby="menu-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">RECIÉN HECHO PARA TI</p>
+              <h2 id="menu-title">¿Qué se te antoja?</h2>
+            </div>
+            <span class="menu-quantity">15 opciones. Un gran antojo.</span>
+          </div>
+          <div
+            class="category-list"
+            role="group"
+            aria-label="Filtrar por categoría"
+          >
+            <button
+              data-category="Todos"
+              aria-pressed="true"
+              class="category active"
+            >
+              <span aria-hidden="true">✳</span> Todo
+            </button>
+            <button
+              data-category="Hamburguesas"
+              aria-pressed="false"
+              class="category"
+            >
+              Hamburguesas
+            </button>
+            <button
+              data-category="Pizzas"
+              aria-pressed="false"
+              class="category"
+            >
+              Pizzas
+            </button>
+            <button
+              data-category="Combos"
+              aria-pressed="false"
+              class="category"
+            >
+              Combos
+            </button>
+            <button
+              data-category="Bebidas"
+              aria-pressed="false"
+              class="category"
+            >
+              Bebidas
+            </button>
+            <button
+              data-category="Postres"
+              aria-pressed="false"
+              class="category"
+            >
+              Postres
+            </button>
+          </div>
+          <div class="catalog-caption">
+            <span id="catalog-label">Un poco de todo, mucho sabor.</span
+            ><span id="catalog-count">15 productos</span>
+          </div>
+          <div id="product-grid" class="product-grid"></div>
+          <noscript
+            ><p>
+              Activa JavaScript para ver el catálogo y construir tu pedido.
+            </p></noscript
+          >
+          <p class="photo-note">
+            Fotografías ilustrativas · Precios de ejemplo en MXN.
+          </p>
+        </section>
+        <aside class="cart-panel" id="cart-panel" aria-labelledby="cart-title">
+          <div class="cart-heading">
+            <div>
+              <p class="eyebrow">AQUÍ EMPIEZA LO BUENO</p>
+              <h2 id="cart-title">
+                Tu pedido<span class="count" id="cart-count">0</span>
+              </h2>
+            </div>
+            <button
+              class="icon-button mobile-close"
+              id="close-cart"
+              aria-label="Cerrar carrito"
+            >
+              ×
+            </button>
+          </div>
+          <fieldset class="fulfillment">
+            <legend>¿Cómo lo quieres?</legend>
+            <div class="delivery-switch">
+              <label
+                ><input
+                  type="radio"
+                  name="fulfillment"
+                  value="pickup"
+                  checked
+                /><span>Recoger <small>Sin cargo</small></span></label
+              ><label
+                ><input type="radio" name="fulfillment" value="delivery" /><span
+                  >A domicilio <small>+$35.00</small></span
+                ></label
+              >
+            </div>
+          </fieldset>
+          <div id="cart-items" class="cart-items"></div>
+          <div class="cart-totals">
+            <div><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+            <div><span>Envío</span><span id="shipping">Sin cargo</span></div>
+            <div class="total-line">
+              <strong>Total</strong><strong id="total">$0.00</strong>
+            </div>
+          </div>
+          <button
+            id="checkout-button"
+            class="button button-primary checkout-button"
+            disabled
+          >
+            Continuar con mi pedido <span aria-hidden="true">→</span>
+          </button>
+          <p class="cart-footnote">El último paso: tus datos y listo.</p>
+          <div class="demo-note">
+            <span aria-hidden="true">ⓘ</span> Vista de demostración. No se
+            realizan cobros ni pedidos reales.
+          </div>
+        </aside>
+      </div>
+      <section id="como-pedir" class="how-section" aria-labelledby="how-title">
+        <div>
+          <p class="eyebrow">ASÍ DE FÁCIL</p>
+          <h2 id="how-title">Del antojo<br />a tu mesa.</h2>
+        </div>
+        <div>
+          <span class="step-number">01</span>
+          <h3>Elige tus favoritos</h3>
+          <p>Explora el menú y agrega todo lo que se te antoje.</p>
+        </div>
+        <div>
+          <span class="step-number">02</span>
+          <h3>Hazlo a tu manera</h3>
+          <p>Ajusta las cantidades y elige recoger o recibir en casa.</p>
+        </div>
+        <div>
+          <span class="step-number">03</span>
+          <h3>Revisa y confirma</h3>
+          <p>Completa tus datos y revisa el resumen de tu pedido.</p>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <a href="#inicio" class="footer-brand">fast food <span>ONLINE</span></a>
+      <p>Mucho sabor. A tu manera.</p>
+      <div>
+        <span>Prototipo académico · 2026</span
+        ><a href="docs/PROPUESTA.md">Propuesta para el equipo ↗</a>
+      </div>
+    </footer>
+    <button class="mobile-cart-bar" data-open-cart>
+      <span>Ver mi pedido <b id="mobile-count">0</b></span
+      ><strong id="mobile-total">$0.00</strong>
+    </button>
+    <div id="cart-backdrop" class="backdrop" hidden></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <dialog
+      id="checkout-dialog"
+      class="checkout-dialog"
+      aria-labelledby="checkout-title"
+    >
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">UN PASO MÁS Y LISTO</p>
+          <h2 id="checkout-title">Tu pedido, a tu manera.</h2>
+        </div>
+        <button
+          class="icon-button"
+          data-close-dialog
+          aria-label="Cerrar formulario"
+        >
+          ×
+        </button>
+      </div>
+      <div class="checkout-progress">
+        <span class="current">1. Tus datos</span><span>2. Resumen final</span>
+      </div>
+      <form id="customer-form">
+        <p id="delivery-description" class="form-info"></p>
+        <div class="form-grid">
+          <label
+            >Nombre completo<input
+              name="name"
+              autocomplete="name"
+              required
+              maxlength="80"
+              placeholder="¿Cómo te llamas?" /></label
+          ><label
+            >Teléfono<input
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              required
+              pattern="[0-9+() .\-]{7,20}"
+              maxlength="20"
+              placeholder="10 dígitos"
+              title="Escribe un teléfono de 7 a 20 caracteres: números, espacios, +, guiones o paréntesis."
+          /></label>
+        </div>
+        <div id="address-fields" hidden>
+          <label
+            >Dirección de entrega<input
+              name="address"
+              autocomplete="street-address"
+              maxlength="180"
+              placeholder="Calle, número y colonia" /></label
+          ><label
+            >Referencias <span class="optional">(opcional)</span
+            ><input
+              name="reference"
+              maxlength="180"
+              placeholder="Algo que nos ayude a encontrarte"
+          /></label>
+        </div>
+        <label
+          >Notas del pedido <span class="optional">(opcional)</span
+          ><textarea
+            name="notes"
+            rows="2"
+            maxlength="300"
+            placeholder="Por ejemplo: sin cebolla en la hamburguesa."
+          ></textarea>
+        </label>
+        <p class="privacy-note">
+          Demo académica: usa datos ficticios. Este formulario no envía
+          información a un servidor.
+        </p>
+        <div class="dialog-footer">
+          <button type="button" class="button button-outline" data-close-dialog>
+            Volver al menú</button
+          ><button type="submit" class="button button-primary">
+            Revisar pedido <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </form>
+      <section
+        id="order-review"
+        hidden
+        aria-label="Resumen final del pedido"
+      ></section>
+      <section
+        id="order-success"
+        hidden
+        aria-label="Pedido de demostración confirmado"
+      ></section>
+    </dialog>
+  </body>
+</html>

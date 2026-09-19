@@ -1,0 +1,13 @@
+{
+  "name": "fast-food-online",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prototipo académico de pedidos de comida con HTML, CSS y JavaScript vanilla.",
+  "scripts": {
+    "start": "node server.cjs",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
