@@ -300,13 +300,28 @@
   });
   phoneInput.addEventListener('invalid', validatePhone);
   form.addEventListener('reset', () => phoneInput.setCustomValidity(''));
+  const customerFields = Object.keys(CustomerValidation.rules).map(name => form.elements[name]);
+  function validateCustomerField(field) {
+    field.setCustomValidity(field.disabled ? '' : CustomerValidation.fieldError(field.name, field.value, field.required));
+  }
+  customerFields.forEach(field => {
+    const rule = CustomerValidation.rules[field.name];
+    field.minLength = rule.min;
+    field.maxLength = rule.max;
+    field.title = rule.message;
+    field.addEventListener('input', () => validateCustomerField(field));
+    field.addEventListener('blur', () => validateCustomerField(field));
+    field.addEventListener('invalid', () => validateCustomerField(field));
+  });
+  form.addEventListener('reset', () => customerFields.forEach(field => field.setCustomValidity('')));
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    for (const name of ["name", "phone", "address"]) {
+    for (const name of ["name", "phone", "address", "reference", "notes"]) {
       const field = form.elements[name];
       field.value = field.value.trim();
     }
     validatePhone();
+    customerFields.forEach(validateCustomerField);
     if (!form.reportValidity()) return;
     customer = Object.fromEntries(new FormData(form));
     renderReview();

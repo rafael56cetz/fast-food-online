@@ -43,3 +43,11 @@ Con Node.js instalado, ejecutar `npm test`. Las pruebas cubren recoger, domicili
 - Al escribir o pegar, quitar letras, espacios y signos; limitar a 10 dígitos.
 - Mantener el escape de HTML en el resumen: notas y direcciones se muestran como texto.
 - La validación del navegador no sustituye la validación de un futuro servidor.
+
+## Otros campos
+- Nombre: 2–80 caracteres, letras y acentos; separadores internos de espacio, apóstrofo o guion. Rechazar números.
+- Dirección: 8–180 caracteres, letras, números y puntuación de domicilio; obligatoria solo a domicilio.
+- Referencias: opcionales, 3–180 caracteres si se completan.
+- Notas: opcionales, 3–300 caracteres si se completan.
+- Rechazar HTML, emojis, controles y símbolos fuera de las reglas; comprobar que el formulario no avance y muestre el motivo.
+- Mantener escape del resumen: restringir caracteres no sustituye la protección de salida ni la validación del servidor.

@@ -16,3 +16,23 @@ test('limpia texto pegado y limita la longitud', () => {
   assert.equal(normalizePhone('<script>alert(1)</script>'), '1');
   assert.equal(isValidPhone(normalizePhone('<script>alert(1)</script>')), false);
 });
+const { fieldError } = require('../js/validation.js');
+test('nombres aceptan acentos y separadores válidos, no números ni símbolos', () => {
+  for (const name of ['María José', "O’Connor", 'Ana-María', 'José', 'Li']) assert.equal(fieldError('name', name, true), '', name);
+  for (const name of ['Ana123', '<b>Ana</b>', 'Ana🙂', 'A', ' '.repeat(5), 'Ana@@', 'Ana--María', 'A'.repeat(81)]) assert.notEqual(fieldError('name', name, true), '', name);
+});
+test('dirección requiere longitud y admite números de domicilio', () => {
+  assert.equal(fieldError('address', 'Calle 10 #25, depto. 2-A', true), '');
+  for (const value of ['Calle', '........', 'Calle <script>', 'Calle\n123', 'Calle🙂 123', 'a'.repeat(181)]) assert.notEqual(fieldError('address', value, true), '');
+});
+test('campos opcionales vacíos, límites exactos y símbolos no permitidos', () => {
+  for (const field of ['reference', 'notes']) {
+    assert.equal(fieldError(field, ''), '');
+    assert.equal(fieldError(field, 'Sin cebolla, por favor.'), '');
+    for (const value of ['ab', '<img src=x>', 'Pedido 😀', 'Texto\\script', '!!!', 'Texto\u0000']) assert.notEqual(fieldError(field, value), '');
+  }
+  assert.equal(fieldError('notes', 'a'.repeat(300)), '');
+  assert.notEqual(fieldError('notes', 'a'.repeat(301)), '');
+  assert.equal(fieldError('reference', 'a'.repeat(180)), '');
+  assert.notEqual(fieldError('reference', 'a'.repeat(181)), '');
+});
