@@ -1558,3 +1558,22 @@ h2 {
     animation: none !important;
   }
 }
+
+/* Ofertas con precio de referencia, condiciones y acceso directo al carrito. */
+.promotions-section { margin: 36px 0 48px; }
+.promotion-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.promotion-card { overflow:hidden; border:1px solid var(--line); border-radius:18px; background:white; display:flex; flex-direction:column; }
+.promotion-card > img { width:100%; height:170px; object-fit:cover; }
+.promotion-content { padding:20px; display:flex; flex-direction:column; flex:1; gap:10px; }
+.promotion-content .eyebrow { color:var(--orange-dark); }
+.promotion-content h3 { font-size:21px; letter-spacing:-.5px; }
+.promotion-content > p:not(.eyebrow) { font-size:12px; color:var(--muted); }
+.promotion-content .promotion-breakdown { font-size:11px; }
+.promotion-price { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+.promotion-price del { color:var(--muted); font-size:14px; }
+.promotion-price strong { font-size:27px; color:var(--orange-dark); }
+.promotion-price > span { border-radius:5px; background:#eaf0e7; color:var(--green); padding:4px 7px; font-size:11px; font-weight:700; }
+.promotion-content .promotion-terms { font-size:10px; line-height:1.6; }
+.promotion-content .button { margin-top:auto; width:100%; }
+.cart-totals .discount-row, .review-totals .discount-row { color:#267142; }
+@media(max-width:760px) { .promotion-grid { grid-template-columns:1fr; gap:16px; } .promotion-card { display:grid; grid-template-columns:110px minmax(0,1fr); } .promotion-card > img { height:100%; min-height:220px; } .promotion-content { padding:16px; } .promotion-content h3 { font-size:18px; } .promotion-price strong { font-size:23px; } }

@@ -29,6 +29,7 @@
   let fulfillment = stored.fulfillment === "delivery" ? "delivery" : "pickup";
   let category = "Todos";
   let customer = null;
+  let reviewedTotal = null;
   let toastTimer;
   let cartOpener;
   const dialog = $("#checkout-dialog");
@@ -49,6 +50,21 @@
       2400,
     );
   }
+  function renderPromotions() {
+    $('#promotion-grid').innerHTML = FOOD_CATALOG.filter(product => product.promotion).map(product => {
+      const price = CartMath.unitPrice(product);
+      const active = price < product.price;
+      return `<article class="promotion-card"><img src="assets/images/${product.image}.jpg" alt="${escapeHTML(product.name)}" width="600" height="400" loading="lazy"><div class="promotion-content"><p class="eyebrow">${product.promotion.label}</p><h3>${product.name}</h3><p>${product.description}</p>${product.promotion.components ? `<p class="promotion-breakdown">Por separado: ${product.promotion.components}</p>` : ''}<div class="promotion-price">${active ? `<del>${money(product.price)}</del>` : ''}<strong>${money(price)}</strong>${active ? `<span>Ahorras ${money(product.price-price)}</span>` : '<span>Oferta no vigente</span>'}</div><p class="promotion-terms">${product.promotion.terms}</p><button class="button button-primary" data-promo-add="${product.id}" ${active ? '' : 'disabled'} aria-label="Agregar promoción ${escapeHTML(product.name)}">${active ? 'Agregar promoción +' : 'Fuera de vigencia'}</button></div></article>`;
+    }).join('');
+  }
+  $('#promotion-grid').addEventListener('click', event => {
+    const button = event.target.closest('[data-promo-add]');
+    if (!button) return;
+    const product = FOOD_CATALOG.find(item => item.id === button.dataset.promoAdd);
+    if (CartMath.unitPrice(product) >= product.price) { renderPromotions(); notify('Esta oferta ya no está vigente.'); return; }
+    updateQuantity(product.id, 1);
+    notify(product.name + ' agregado con promoción');
+  });
   function renderCatalog() {
     const items = FOOD_CATALOG.filter(
       (product) => category === "Todos" || product.category === category,
@@ -56,7 +72,7 @@
     $("#product-grid").innerHTML = items
       .map(
         (product) =>
-          `<article class="product-card"><div class="product-image"><img src="assets/images/${product.image}.jpg" alt="${escapeHTML(product.name)}" width="600" height="440" loading="lazy">${product.badge ? `<span class="product-badge">${product.badge}</span>` : ""}</div><div class="product-body"><p class="product-detail">${product.detail}</p><div class="product-title"><h3>${product.name}</h3><strong>${money(product.price)}</strong></div><p class="product-description">${product.description}</p><button class="add-button" data-add="${product.id}" aria-label="Agregar ${product.name} al pedido"><span>Agregar al pedido</span><span class="add-plus" aria-hidden="true">+</span></button></div></article>`,
+          `<article class="product-card"><div class="product-image"><img src="assets/images/${product.image}.jpg" alt="${escapeHTML(product.name)}" width="600" height="440" loading="lazy">${product.badge ? `<span class="product-badge">${product.badge}</span>` : ""}</div><div class="product-body"><p class="product-detail">${product.detail}</p><div class="product-title"><h3>${product.name}</h3><strong>${money(CartMath.unitPrice(product))}</strong></div><p class="product-description">${product.description}</p><button class="add-button" data-add="${product.id}" aria-label="Agregar ${product.name} al pedido"><span>Agregar al pedido</span><span class="add-plus" aria-hidden="true">+</span></button></div></article>`,
       )
       .join("");
     $("#catalog-count").textContent = `${items.length} productos`;
@@ -74,13 +90,16 @@
       ? FOOD_CATALOG.filter((product) => cart[product.id])
           .map(
             (product) =>
-              `<div class="cart-item"><img src="assets/images/${product.image}.jpg" alt="" width="60" height="60"><div class="cart-item-content"><div class="cart-item-title"><h3>${product.name}</h3><button data-remove="${product.id}" aria-label="Eliminar ${product.name}" class="remove-button">×</button></div><div class="cart-item-bottom"><div class="quantity"><button data-decrease="${product.id}" aria-label="Disminuir cantidad de ${product.name}">−</button><span aria-label="Cantidad de ${product.name}: ${cart[product.id]}">${cart[product.id]}</span><button data-increase="${product.id}" aria-label="Aumentar cantidad de ${product.name}" ${cart[product.id] >= CartMath.MAX_QUANTITY ? "disabled" : ""}>+</button></div><strong>${money(product.price * cart[product.id])}</strong></div></div></div>`,
+              `<div class="cart-item"><img src="assets/images/${product.image}.jpg" alt="" width="60" height="60"><div class="cart-item-content"><div class="cart-item-title"><h3>${product.name}</h3><button data-remove="${product.id}" aria-label="Eliminar ${product.name}" class="remove-button">×</button></div><div class="cart-item-bottom"><div class="quantity"><button data-decrease="${product.id}" aria-label="Disminuir cantidad de ${product.name}">−</button><span aria-label="Cantidad de ${product.name}: ${cart[product.id]}">${cart[product.id]}</span><button data-increase="${product.id}" aria-label="Aumentar cantidad de ${product.name}" ${cart[product.id] >= CartMath.MAX_QUANTITY ? "disabled" : ""}>+</button></div><strong>${money(CartMath.unitPrice(product) * cart[product.id])}</strong></div></div></div>`,
           )
           .join("")
       : '<div class="cart-empty"><div class="empty-bag" aria-hidden="true">＋</div><h3>Algo rico está por llegar.</h3><p>Agrega tus favoritos del menú.<br>Nosotros guardamos tu lugar aquí.</p></div>';
     for (const id of ["header-count", "cart-count", "mobile-count"])
       $(`#${id}`).textContent = result.count;
-    $("#subtotal").textContent = money(result.subtotal);
+    const discount = CartMath.savings(cart, FOOD_CATALOG);
+    $('#discount-row').hidden = discount === 0;
+    $('#discount').textContent = '−' + money(discount);
+    $("#subtotal").textContent = money(result.subtotal + discount);
     $("#shipping").textContent = result.shipping
       ? money(result.shipping)
       : "Sin cargo";
@@ -127,7 +146,7 @@
     $("#cart-panel").setAttribute("aria-modal", "true");
     document
       .querySelectorAll(
-        ".site-header, .hero, .promo-strip, .menu-section, .how-section, .site-footer, .mobile-cart-bar",
+        ".site-header, .hero, .promo-strip, .promotions-section, .menu-section, .how-section, .site-footer, .mobile-cart-bar",
       )
       .forEach((element) => {
         element.inert = true;
@@ -167,6 +186,8 @@
   }
   function renderReview() {
     const result = CartMath.totals(cart, FOOD_CATALOG, fulfillment);
+    reviewedTotal = result.total;
+    const discount = CartMath.savings(cart, FOOD_CATALOG);
     form.hidden = true;
     $("#order-review").hidden = false;
     $("#checkout-title").textContent = "¿Todo se ve delicioso?";
@@ -178,11 +199,11 @@
       )
         .map(
           (product) =>
-            `<div><span>${cart[product.id]} × ${product.name}</span><strong>${money(cart[product.id] * product.price)}</strong></div>`,
+            `<div><span>${cart[product.id]} × ${product.name}</span><strong>${money(cart[product.id] * CartMath.unitPrice(product))}</strong></div>`,
         )
         .join(
           "",
-        )}</div><div class="review-totals"><div><span>Subtotal</span><span>${money(result.subtotal)}</span></div><div><span>Envío</span><span>${result.shipping ? money(result.shipping) : "Sin cargo"}</span></div><div class="total-line"><strong>Total MXN</strong><strong>${money(result.total)}</strong></div></div>${customer.notes ? `<p class="review-notes"><strong>Notas:</strong> ${escapeHTML(customer.notes)}</p>` : ""}<p class="privacy-note">Esta confirmación es una simulación. No se envía a un restaurante ni genera un cobro.</p><div class="dialog-footer"><button class="button button-outline" id="edit-details">Editar datos</button><button class="button button-primary" id="confirm-order">Confirmar pedido de prueba →</button></div>`;
+        )}</div><div class="review-totals"><div><span>Subtotal</span><span>${money(result.subtotal + discount)}</span></div>${discount ? `<div class="discount-row"><span>Ahorro en promociones</span><span>−${money(discount)}</span></div>` : ""}<div><span>Envío</span><span>${result.shipping ? money(result.shipping) : "Sin cargo"}</span></div><div class="total-line"><strong>Total MXN</strong><strong>${money(result.total)}</strong></div></div>${customer.notes ? `<p class="review-notes"><strong>Notas:</strong> ${escapeHTML(customer.notes)}</p>` : ""}<p class="privacy-note">Esta confirmación es una simulación. No se envía a un restaurante ni genera un cobro.</p><div class="dialog-footer"><button class="button button-outline" id="edit-details">Editar datos</button><button class="button button-primary" id="confirm-order">Confirmar pedido de prueba →</button></div>`;
     $("#edit-details").addEventListener("click", () => {
       form.hidden = false;
       $("#order-review").hidden = true;
@@ -197,6 +218,7 @@
   }
   function confirmOrder() {
     const result = CartMath.totals(cart, FOOD_CATALOG, fulfillment);
+    if (reviewedTotal !== result.total) { renderReview(); renderCart(); renderCatalog(); renderPromotions(); notify('Cambió la vigencia de una oferta. Revisa el nuevo total antes de confirmar.'); return; }
     const summary = FOOD_CATALOG.filter((product) => cart[product.id])
       .map((product) => `${cart[product.id]} × ${product.name}`)
       .join(" · ");
@@ -352,6 +374,7 @@
   window
     .matchMedia("(min-width: 1100px)")
     .addEventListener("change", closeCart);
+  renderPromotions();
   renderCatalog();
   renderCart();
 })();

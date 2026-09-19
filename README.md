@@ -80,3 +80,6 @@ Requiere Node.js, pero no dependencias externas. Para probar el recorrido visual
 Lean primero [la propuesta](docs/PROPUESTA.md) y [la guía del equipo](docs/EQUIPO.md). Cada compañero puede clonar o descargar el repositorio público. Para subir cambios debe ser colaborador autorizado o trabajar con un fork y un pull request.
 
 No se incluye el código de PizzaDigital: este proyecto es una implementación nueva de la experiencia del cliente. Las fotografías son ilustrativas; sus fuentes y condiciones se documentan [aquí](docs/FOTOGRAFIAS.md).
+
+## Promociones
+Dos combos con ahorro y una oferta semanal con fechas de vigencia. Los descuentos aparecen en el carrito y el resumen. Consulta [precios y condiciones](docs/PROMOCIONES.md).

@@ -38,7 +38,7 @@
       </button>
     </header>
     <main id="inicio" class="page-shell">
-      <section id="promociones" class="hero" aria-labelledby="hero-title">
+      <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow">
             <span class="tiny-star">✳</span> BUENA COMIDA. CERO COMPLICACIONES.
@@ -85,6 +85,11 @@
           Ver combos desde $149 <span aria-hidden="true">→</span>
         </button>
       </div>
+      <section id="promociones" class="promotions-section" aria-labelledby="promotions-title">
+        <div class="section-heading"><div><p class="eyebrow">MÁS ANTOJO POR MENOS</p><h2 id="promotions-title">Hoy toca darte un gusto.</h2></div><span class="menu-quantity">El ahorro va directo a tu pedido.</span></div>
+        <div id="promotion-grid" class="promotion-grid"></div>
+        <p class="photo-note">Promociones de demostración · Precios MXN · Papas de referencia: $39 por porción, incluidas en los combos. Sin cupones ni descuentos adicionales sobre estas ofertas.</p>
+      </section>
       <div class="order-layout">
         <section id="menu" class="menu-section" aria-labelledby="menu-title">
           <div class="section-heading">
@@ -192,6 +197,7 @@
           <div id="cart-items" class="cart-items"></div>
           <div class="cart-totals">
             <div><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+            <div id="discount-row" class="discount-row" hidden><span>Ahorro en promociones</span><span id="discount">−$0.00</span></div>
             <div><span>Envío</span><span id="shipping">Sin cargo</span></div>
             <div class="total-line">
               <strong>Total</strong><strong id="total">$0.00</strong>

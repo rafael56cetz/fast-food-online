@@ -34,7 +34,7 @@ En escritorio el carrito permanece al lado del catálogo. En móvil se abre medi
 - Envío fijo: $35 para domicilio y $0 para recoger. Cumple el reto de variar por la opción seleccionada; no calcula distancias.
 - Máximo de 20 unidades por producto para evitar pedidos accidentales enormes.
 - Fotografías ilustrativas descargadas de Unsplash; algunos combos muestran el producto principal. Para una tienda real se fotografiarían los productos y combos completos.
-- Los combos tienen un precio propio de ejemplo, sin cupones, fechas límite ni descuentos ficticios adicionales.
+- Los combos muestran precios de referencia y ahorro. El brownie tiene una oferta semanal con fechas explícitas; consultar PROMOCIONES.md. No hay cupones ni descuentos acumulables.
 
 ## ¿Y el administrador?
 
