@@ -36,3 +36,10 @@ Con Node.js instalado, ejecutar `npm test`. Las pruebas cubren recoger, domicili
 - El almacenamiento local es por navegador y origen; no sincroniza equipos.
 - Sin backend, no se comprueban existencias, domicilios reales, permisos ni pagos.
 - Este servidor local es únicamente para desarrollo, no para publicación en internet.
+
+## Teléfono
+- Aceptar exactamente 10 dígitos, incluidos ceros iniciales.
+- No permitir avanzar con 9 o 11 dígitos.
+- Al escribir o pegar, quitar letras, espacios y signos; limitar a 10 dígitos.
+- Mantener el escape de HTML en el resumen: notas y direcciones se muestran como texto.
+- La validación del navegador no sustituye la validación de un futuro servidor.

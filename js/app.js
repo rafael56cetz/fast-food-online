@@ -282,12 +282,31 @@
     $("#order-review").replaceChildren();
     $("#order-success").replaceChildren();
   });
+  const phoneInput = form.elements.phone;
+  const phoneMessage = 'Escribe exactamente 10 dígitos, sin letras, espacios ni signos.';
+  function validatePhone() {
+    phoneInput.setCustomValidity(CustomerValidation.isValidPhone(phoneInput.value) ? '' : phoneMessage);
+  }
+  phoneInput.addEventListener('input', () => {
+    const start = phoneInput.selectionStart;
+    const original = phoneInput.value;
+    const cleaned = CustomerValidation.normalizePhone(original);
+    if (original !== cleaned) {
+      const cursor = CustomerValidation.normalizePhone(original.slice(0, start ?? original.length)).length;
+      phoneInput.value = cleaned;
+      phoneInput.setSelectionRange(cursor, cursor);
+    }
+    validatePhone();
+  });
+  phoneInput.addEventListener('invalid', validatePhone);
+  form.addEventListener('reset', () => phoneInput.setCustomValidity(''));
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     for (const name of ["name", "phone", "address"]) {
       const field = form.elements[name];
       field.value = field.value.trim();
     }
+    validatePhone();
     if (!form.reportValidity()) return;
     customer = Object.fromEntries(new FormData(form));
     renderReview();
