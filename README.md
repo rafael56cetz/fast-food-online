@@ -41,29 +41,28 @@ Abre **http://localhost:3200**. No hace falta `npm install`. Para detener el ser
 ## Estructura
 
 ```text
-index.html           Estructura semántica, carrito y formulario
-css/styles.css       Diseño, variables de color y responsive
-js/catalog.js        Productos, precios e imágenes
-js/cart.js           Cálculos y validación del carrito
-js/app.js            Interacciones, DOM y almacenamiento local
-assets/images/       Fotografías incluidas
-server.cjs           Servidor estático opcional, solo localhost
-tests/cart.test.cjs   Pruebas de cálculos y datos inválidos
-docs/PROPUESTA.md     Alternativas de diseño y alcance del administrador
-docs/EQUIPO.md        Reparto sugerido y flujo de colaboración
-docs/PRUEBAS.md       Guía para revisar la demo
-docs/FOTOGRAFIAS.md   Fuentes de las fotografías
+index.html                          Vista: inicio, carrito y formulario
+css/styles.css                      Diseño y responsive
+js/data/catalog.js                  Productos y promociones
+js/domain/cart.js                   Cálculos del pedido
+js/domain/customer-validation.js    Reglas y filtrado de campos
+js/ui/customer-form.js              Eventos y errores del formulario
+js/controllers/storefront.js        Navegación, estado y renderizado
+assets/images/                      Fotografías incluidas
+tests/                              Pruebas automatizadas
+docs/                               Arquitectura y guías del equipo
+server.cjs                          Servidor local opcional
 ```
 
 ## Dónde modificar
 
 | Cambio | Archivo |
 |---|---|
-| Productos, categorías, precios, fotos | `js/catalog.js` |
+| Productos, categorías, precios, fotos | `js/data/catalog.js` |
 | Colores y diseño | Variables `:root` en `css/styles.css` |
 | Textos, navegación y formulario | `index.html` |
-| Tarifa de envío | `SHIPPING` en `js/cart.js`; actualizar también textos de `index.html` y `js/app.js` |
-| Lógica del recorrido | `js/app.js` |
+| Tarifa de envío | `SHIPPING` en `js/domain/cart.js`; actualizar también textos de `index.html` y `js/controllers/storefront.js` |
+| Lógica del recorrido | `js/controllers/storefront.js` |
 
 Los precios del catálogo están en **centavos**: `9900` representa `$99.00 MXN`. Cada producto debe tener un `id` único.
 
@@ -83,3 +82,6 @@ No se incluye el código de PizzaDigital: este proyecto es una implementación n
 
 ## Promociones
 Dos combos con ahorro y una oferta semanal con fechas de vigencia. Los descuentos aparecen en el carrito y el resumen. Consulta [precios y condiciones](docs/PROMOCIONES.md).
+
+## Organización y formulario
+Consulta [la arquitectura por capas](docs/ARQUITECTURA.md). El formulario filtra caracteres mientras escribes; los errores aparecen al revisar el pedido, sin tooltips técnicos. El nombre completo requiere al menos tres partes.

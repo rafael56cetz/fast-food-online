@@ -3,8 +3,8 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
 const path=require('node:path');
-const {unitPrice,totals,savings}=require('../js/cart.js');
-const catalog=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../js/catalog.js'),'utf8')+';FOOD_CATALOG;');
+const {unitPrice,totals,savings}=require('../js/domain/cart.js');
+const catalog=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../js/data/catalog.js'),'utf8')+';FOOD_CATALOG;');
 const active=new Date(2026,8,20,12);
 const brownie=catalog.find(p=>p.id==='dessert-brownie');
 test('dos combos y oferta semanal calculan ahorro y envio una sola vez',()=>{

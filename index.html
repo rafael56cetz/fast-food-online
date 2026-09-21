@@ -11,10 +11,11 @@
     <title>Fast Food Online · A un clic de tu antojo</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="css/styles.css" />
-    <script defer src="js/catalog.js"></script>
-    <script defer src="js/cart.js"></script>
-    <script defer src="js/validation.js"></script>
-    <script defer src="js/app.js"></script>
+    <script defer src="js/data/catalog.js"></script>
+    <script defer src="js/domain/cart.js"></script>
+    <script defer src="js/domain/customer-validation.js"></script>
+    <script defer src="js/ui/customer-form.js"></script>
+    <script defer src="js/controllers/storefront.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#menu">Saltar al menú</a>
@@ -88,7 +89,7 @@
       <section id="promociones" class="promotions-section" aria-labelledby="promotions-title">
         <div class="section-heading"><div><p class="eyebrow">MÁS ANTOJO POR MENOS</p><h2 id="promotions-title">Hoy toca darte un gusto.</h2></div><span class="menu-quantity">El ahorro va directo a tu pedido.</span></div>
         <div id="promotion-grid" class="promotion-grid"></div>
-        <p class="photo-note">Promociones de demostración · Precios MXN · Papas de referencia: $39 por porción, incluidas en los combos. Sin cupones ni descuentos adicionales sobre estas ofertas.</p>
+        <p class="photo-note">Precios MXN · Papas de referencia: $39 por porción, incluidas en los combos. Sin cupones ni descuentos adicionales sobre estas ofertas.</p>
       </section>
       <div class="order-layout">
         <section id="menu" class="menu-section" aria-labelledby="menu-title">
@@ -293,7 +294,6 @@
               pattern="[0-9]{10}" minlength="10"
               maxlength="10"
               placeholder="10 dígitos"
-              title="Escribe exactamente 10 dígitos, sin letras, espacios ni signos."
           /></label>
         </div>
         <div id="address-fields" hidden>

@@ -1,6 +1,6 @@
 const { test } = require("node:test");
 const assert = require("node:assert/strict");
-const { totals, sanitizeCart } = require("../js/cart.js");
+const { totals, sanitizeCart } = require("../js/domain/cart.js");
 const catalog = [
   { id: "burger", price: 9900 },
   { id: "drink", price: 2900 },

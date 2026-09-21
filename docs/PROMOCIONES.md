@@ -8,7 +8,7 @@ La sección Promociones contiene dos combos y una oferta semanal. Cada tarjeta m
 | Combo Doble | Hamburguesa $139 + papas $39 + bebida $29 = $207 | $189 | $18 |
 | Brownie Intenso | $49 | $39 | $10 |
 
-Los precios individuales de las papas son referencias de esta demo; no se agregó una categoría nueva. Los combos no tienen fecha de cierre. El brownie tiene vigencia del 19 al 25 de septiembre de 2026, inclusive, según la fecha local del dispositivo. Fuera de ese periodo la tarjeta deja de ofrecer el descuento y el catálogo utiliza $49. La fecha no se renueva automáticamente. Para otra semana, editar `promotion.start` y `promotion.end` en `js/catalog.js`.
+Los precios individuales de las papas son referencias de esta demo; no se agregó una categoría nueva. Los combos no tienen fecha de cierre. El brownie tiene vigencia del 19 al 25 de septiembre de 2026, inclusive, según la fecha local del dispositivo. Fuera de ese periodo la tarjeta deja de ofrecer el descuento y el catálogo utiliza $49. La fecha no se renueva automáticamente. Para otra semana, editar `promotion.start` y `promotion.end` en `js/data/catalog.js`.
 
 El subtotal del carrito muestra los precios de referencia y una línea separada resta el ahorro. Los importes de cada producto ya reflejan su oferta. El envío conserva su tarifa de $35 o $0 al recoger. No se implementó envío gratis ni cupones en esta etapa.
 

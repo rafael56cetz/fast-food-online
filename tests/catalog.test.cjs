@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
-const catalog = vm.runInNewContext(fs.readFileSync(path.join(root, 'js/catalog.js'), 'utf8') + '; FOOD_CATALOG;');
+const catalog = vm.runInNewContext(fs.readFileSync(path.join(root, 'js/data/catalog.js'), 'utf8') + '; FOOD_CATALOG;');
 test('catálogo con 15 productos únicos y tres por categoría', () => {
   assert.equal(catalog.length, 15);
   assert.equal(new Set(catalog.map(product => product.id)).size, 15);

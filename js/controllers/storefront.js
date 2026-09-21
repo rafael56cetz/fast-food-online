@@ -304,50 +304,7 @@
     $("#order-review").replaceChildren();
     $("#order-success").replaceChildren();
   });
-  const phoneInput = form.elements.phone;
-  const phoneMessage = 'Escribe exactamente 10 dígitos, sin letras, espacios ni signos.';
-  function validatePhone() {
-    phoneInput.setCustomValidity(CustomerValidation.isValidPhone(phoneInput.value) ? '' : phoneMessage);
-  }
-  phoneInput.addEventListener('input', () => {
-    const start = phoneInput.selectionStart;
-    const original = phoneInput.value;
-    const cleaned = CustomerValidation.normalizePhone(original);
-    if (original !== cleaned) {
-      const cursor = CustomerValidation.normalizePhone(original.slice(0, start ?? original.length)).length;
-      phoneInput.value = cleaned;
-      phoneInput.setSelectionRange(cursor, cursor);
-    }
-    validatePhone();
-  });
-  phoneInput.addEventListener('invalid', validatePhone);
-  form.addEventListener('reset', () => phoneInput.setCustomValidity(''));
-  const customerFields = Object.keys(CustomerValidation.rules).map(name => form.elements[name]);
-  function validateCustomerField(field) {
-    field.setCustomValidity(field.disabled ? '' : CustomerValidation.fieldError(field.name, field.value, field.required));
-  }
-  customerFields.forEach(field => {
-    const rule = CustomerValidation.rules[field.name];
-    field.minLength = rule.min;
-    field.maxLength = rule.max;
-    field.title = rule.message;
-    field.addEventListener('input', () => validateCustomerField(field));
-    field.addEventListener('blur', () => validateCustomerField(field));
-    field.addEventListener('invalid', () => validateCustomerField(field));
-  });
-  form.addEventListener('reset', () => customerFields.forEach(field => field.setCustomValidity('')));
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    for (const name of ["name", "phone", "address", "reference", "notes"]) {
-      const field = form.elements[name];
-      field.value = field.value.trim();
-    }
-    validatePhone();
-    customerFields.forEach(validateCustomerField);
-    if (!form.reportValidity()) return;
-    customer = Object.fromEntries(new FormData(form));
-    renderReview();
-  });
+  CustomerForm.bind(form, data => { customer = data; renderReview(); });
   document.addEventListener("keydown", (event) => {
     if (!$("#cart-panel").classList.contains("is-open")) return;
     if (event.key === "Escape") {

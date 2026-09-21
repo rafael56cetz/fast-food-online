@@ -7,9 +7,9 @@ Adapten estos cuatro bloques al número de integrantes; no asignan responsabilid
 | Bloque | Responsabilidad | Archivos principales |
 |---|---|---|
 | Diseño y estructura | Inicio, promociones, navegación, coherencia de textos | `index.html`, `css/styles.css` |
-| Catálogo | 15 productos, fotografías, categorías, descripciones | `js/catalog.js`, `assets/images/` |
-| Pedido | Carrito, cantidades, eliminación, envío y totales | `js/cart.js`, `js/app.js`, `tests/` |
-| Checkout y QA | Formulario, resumen, pruebas de teclado, móvil y escritorio | `index.html`, `js/app.js`, `docs/PRUEBAS.md` |
+| Catálogo | 15 productos, fotografías, categorías, descripciones | `js/data/catalog.js`, `assets/images/` |
+| Pedido | Carrito, cantidades, eliminación, envío y totales | `js/domain/cart.js`, `js/controllers/storefront.js`, `tests/` |
+| Checkout y QA | Formulario, resumen, pruebas de teclado, móvil y escritorio | `index.html`, `js/controllers/storefront.js`, `docs/PRUEBAS.md` |
 
 Acuerden los cambios que tocan archivos compartidos para no modificar el mismo bloque al mismo tiempo.
 
@@ -29,7 +29,7 @@ git switch main
 git pull --ff-only
 git switch -c mejora/catalogo
 # Editar y comprobar la interfaz.
-git add js/catalog.js
+git add js/data/catalog.js
 git commit -m "Actualiza las descripciones del catálogo"
 git push -u origin mejora/catalogo
 ```

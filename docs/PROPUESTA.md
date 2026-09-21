@@ -40,7 +40,7 @@ En escritorio el carrito permanece al lado del catálogo. En móvil se abre medi
 
 **Es razonable en un producto real, pero no es obligatorio en los requisitos que compartiste.** No conviene confundirlo con la tienda: el cliente compra; el administrador mantiene el catálogo.
 
-Para esta entrega los productos se editan en `js/catalog.js`. El equipo puede modificar nombres, precios, fotos y descripciones sin una base de datos.
+Para esta entrega los productos se editan en `js/data/catalog.js`. El equipo puede modificar nombres, precios, fotos y descripciones sin una base de datos.
 
 ### Segunda fase opcional, todavía solo frontend
 

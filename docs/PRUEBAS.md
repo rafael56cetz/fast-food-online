@@ -51,3 +51,10 @@ Con Node.js instalado, ejecutar `npm test`. Las pruebas cubren recoger, domicili
 - Notas: opcionales, 3–300 caracteres si se completan.
 - Rechazar HTML, emojis, controles y símbolos fuera de las reglas; comprobar que el formulario no avance y muestre el motivo.
 - Mantener escape del resumen: restringir caracteres no sustituye la protección de salida ni la validación del servidor.
+
+## Comportamiento actualizado del formulario
+- Al enfocar o pasar el cursor no deben aparecer instrucciones emergentes.
+- Al escribir o pegar, nombre filtra números y símbolos no admitidos; dirección conserva números y puntuación útil.
+- Rafael o Rafael Pérez deben pedir nombre completo al revisar; Rafael Pérez López y José Rafael Pérez deben avanzar.
+- Se aceptan espacios repetidos y acentos compuestos, se conservan límites y errores de campos vacíos al enviar.
+- La nota de promociones comienza en Precios MXN.
